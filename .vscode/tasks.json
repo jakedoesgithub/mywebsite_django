@@ -1,0 +1,17 @@
+{"version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run dev enironment",
+      "type": "shell",
+      "command": "docker compose --env-file ./dev.env up",
+      "windows": {
+        "command": ".\\scripts\\test.cmd"
+      },
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}
