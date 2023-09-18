@@ -7,6 +7,19 @@
       "windows": {
         "command": ".\\scripts\\test.cmd"
       },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "pre-commit check on staged files with black and flake8",
+      "type": "shell",
+      "command": "pre-commit run",
+      "windows": {
+        "command": "pre-commit run"
+      },
       "group": "test",
       "presentation": {
         "reveal": "always",
