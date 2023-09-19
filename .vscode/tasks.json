@@ -3,7 +3,7 @@
     {
       "label": "run dev enironment",
       "type": "shell",
-      "command": "docker compose --env-file ./dev.env up",
+      "command": "docker compose --env-file dev.env up",
       "windows": {
         "command": ".\\scripts\\test.cmd"
       },
@@ -11,20 +11,20 @@
       "presentation": {
         "reveal": "always",
         "panel": "new"
-      }
+      },
     },
     {
-      "label": "pre-commit check on staged files with black and flake8",
+      "label": "enter django shell",
       "type": "shell",
-      "command": "pre-commit run",
+      "command": "docker compose --env-file dev.env exec web bash",
       "windows": {
-        "command": "pre-commit run"
+        "command": "docker compose --env-file dev.env up exec web bash"
       },
-      "group": "test",
+      "group": "build",      
       "presentation": {
         "reveal": "always",
         "panel": "new"
       }
-    }
+    },
   ]
 }

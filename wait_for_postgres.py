@@ -2,6 +2,10 @@ import os
 import logging
 from time import time, sleep
 import psycopg2
+import environ
+
+env = environ.Env()
+
 
 check_timeout = os.getenv("POSTGRES_CHECK_TIMEOUT", 30)
 check_interval = os.getenv("POSTGRES_CHECK_INTERVAL", 1)
