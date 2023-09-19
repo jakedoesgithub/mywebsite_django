@@ -26,5 +26,18 @@
         "panel": "new"
       }
     },
+    {
+      "label": "build dev enironment",
+      "type": "shell",
+      "command": "docker compose --env-file dev.env build",
+      "windows": {
+        "command": "docker compose --env-file dev.env build"
+      },
+      "group": "build",      
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
   ]
 }

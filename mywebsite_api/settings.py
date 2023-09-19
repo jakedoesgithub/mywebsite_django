@@ -56,10 +56,10 @@ INSTALLED_APPS = [
     "simple_history",
     "phonenumber_field",
     "easy_thumbnails",
-    #"django_dramatiq",
     
     # My Apps
-    "mywebsite_api.recipes",
+    "mywebsite_api.recipes"
+
 ]
 
 MIDDLEWARE = [

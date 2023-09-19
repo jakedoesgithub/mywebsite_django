@@ -20,22 +20,20 @@ from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
 from rest_framework_extensions.routers import NestedRouterMixin
-from recipes.views import RecipeViewSet
+from mywebsite_api.recipes.views import RecipeViewSet
+
 
 class DefaultRouterWithNesting(NestedRouterMixin, DefaultRouter):
     pass
 
 
-router = DefaultRouterWithNesting(NestedRouterMixin, DefaultRouter) 
+router = DefaultRouterWithNesting()
 router.register(r"recipes", RecipeViewSet)
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("", include(router.urls)),
-    # the 'api-root' from django rest-frameworks default router
-    # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
-    re_path(r"^$", RedirectView.as_view(url=reverse_lazy("api-root"), permanent=False)),
 ]
 
 if settings.DEBUG:
