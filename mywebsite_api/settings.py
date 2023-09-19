@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "easy_thumbnails",
     #"django_dramatiq",
-  
+    
     # My Apps
     "mywebsite_api.recipes",
 ]
@@ -151,7 +151,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #dev settings
-if env("ENVIRONMENT", "dev") == "dev":
+if env.str("ENVIRONMENT", "dev") == "dev":
     DEBUG = True
 
     INSTALLED_APPS += ("debug_toolbar", )

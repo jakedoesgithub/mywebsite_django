@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
 from rest_framework_extensions.routers import NestedRouterMixin
-from .recipes.views import RecipeViewSet
+from recipes.views import RecipeViewSet
 
 class DefaultRouterWithNesting(NestedRouterMixin, DefaultRouter):
     pass
