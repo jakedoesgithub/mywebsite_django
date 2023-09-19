@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     #"django_dramatiq",
   
     # My Apps
+    "mywebsite_api.recipes",
 ]
 
 MIDDLEWARE = [
@@ -149,5 +150,23 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS
-CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS", False)
+#dev settings
+if env("ENVIRONMENT", "dev") == "dev":
+    DEBUG = True
+
+    INSTALLED_APPS += ("debug_toolbar", )
+
+    DEBUG_TOOLBAR_PANELS = [
+        "debug_toolbar.panels.versions.VersionsPanel",
+        "debug_toolbar.panels.sql.SQLPanel",
+        "debug_toolbar.panels.timer.TimerPanel",
+        "debug_toolbar.panels.settings.SettingsPanel",
+        "debug_toolbar.panels.headers.HeadersPanel",
+        "debug_toolbar.panels.request.RequestPanel",
+        "debug_toolbar.panels.cache.CachePanel",
+        "debug_toolbar.panels.signals.SignalsPanel",
+        "debug_toolbar.panels.logging.LoggingPanel",
+    ]
+
+    MIDDLEWARE += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
+    CORS_ALLOW_ALL_ORIGINS = True

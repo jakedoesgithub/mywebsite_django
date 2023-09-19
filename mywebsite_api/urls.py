@@ -14,9 +14,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.urls import path, re_path, include, reverse_lazy
 from django.contrib import admin
-from django.urls import path
+from django.views.generic.base import RedirectView
+from rest_framework.routers import DefaultRouter
+from rest_framework_extensions.routers import NestedRouterMixin
+from .recipes.views import RecipeViewSet
+
+class DefaultRouterWithNesting(NestedRouterMixin, DefaultRouter):
+    pass
+
+
+router = DefaultRouterWithNesting(NestedRouterMixin, DefaultRouter) 
+router.register(r"recipes", RecipeViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", include(router.urls)),
+    # the 'api-root' from django rest-frameworks default router
+    # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
+    re_path(r"^$", RedirectView.as_view(url=reverse_lazy("api-root"), permanent=False)),
 ]
+
+if settings.DEBUG:
+    # urlpatterns += staticfiles_urlpatterns()
+    urlpatterns += (path("__debug__/", include("debug_toolbar.urls")),)
