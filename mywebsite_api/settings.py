@@ -172,13 +172,13 @@ REST_FRAMEWORK = {
     ),
 }
 
-
+DEBUG_TOOLBAR_PANELS = []
 #dev settings
 if env.str("ENVIRONMENT", "dev") == "dev":
 
     INSTALLED_APPS += ("debug_toolbar", )
 
-    DEBUG_TOOLBAR_PANELS = [
+    DEBUG_TOOLBAR_PANELS += [
         "debug_toolbar.panels.versions.VersionsPanel",
         "debug_toolbar.panels.sql.SQLPanel",
         "debug_toolbar.panels.timer.TimerPanel",

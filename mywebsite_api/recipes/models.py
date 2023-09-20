@@ -1,6 +1,7 @@
 from django.db import models
+from mywebsite_api.core.model_abstracts import Model
 
-class Recipe(models.Model):
+class Recipe(Model):
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     ingredients = models.TextField()
@@ -17,3 +18,6 @@ class Recipe(models.Model):
             models.Index(fields=["recipe_type"]),
             models.Index(fields=["source"]),
         ]
+
+    def __str__(self) -> str:
+        return f"{self.title}"

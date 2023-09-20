@@ -24,8 +24,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
 
-        self._create_or_update_address(instance)
-
         instance.save()
         return instance
 
