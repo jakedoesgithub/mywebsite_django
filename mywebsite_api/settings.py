@@ -23,17 +23,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# enviroinment variables
+# enviroinment variables. Change this later when you need to seperate between dev and prod
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, "dev.env"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG", False)
-
-ALLOWED_HOSTS = ['*']
-
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
+#use a comma seperated string in .env file for allowed hosts
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
+CORS_ALLOW_ALL_ORIGINS = env.bool("DJANGO_CORS_ALLOW_ALL_ORIGINS", default="False")
 
 # Application definition
 
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "easy_thumbnails",
     
     # My Apps
+    "mywebsite_api.core",
     "mywebsite_api.recipes"
 
 ]
@@ -150,9 +151,30 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#rest framework settings
+# Django Rest Framework
+PAGINATION_MAX_PAGE_SIZE = 10000
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "mywebsite_api.core.pagination.LinkedPagination",
+    "PAGE_SIZE": env.int("DJANGO_PAGINATION_LIMIT", 10),
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
+    "JSON_UNDERSCOREIZE": {
+        "no_underscore_before_number": True,
+    },
+    "DEFAULT_RENDERER_CLASSES": (
+        "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
+        "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
+    ),
+    "DEFAULT_PARSER_CLASSES": (
+        "djangorestframework_camel_case.parser.CamelCaseFormParser",
+        "djangorestframework_camel_case.parser.CamelCaseMultiPartParser",
+        "djangorestframework_camel_case.parser.CamelCaseJSONParser",
+    ),
+}
+
+
 #dev settings
 if env.str("ENVIRONMENT", "dev") == "dev":
-    DEBUG = True
 
     INSTALLED_APPS += ("debug_toolbar", )
 
@@ -169,4 +191,3 @@ if env.str("ENVIRONMENT", "dev") == "dev":
     ]
 
     MIDDLEWARE += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
-    CORS_ALLOW_ALL_ORIGINS = True
